@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AddressBooks</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/addressbook-editor.js}"></script>
+</head>
+<body>
+    <h1>Addressbook Editor</h1>
+    <form action="#" method="post" th:action="@{/editor/addressbook}" th:id="button-create-addressbook">
+        <input type="submit" value="Create New Addressbook">
+    </form>
+    <hr>
+    <div id="addressbooks">
+        <div th:each="addressbook: ${addressbooks}">
+            <h3 th:text="'Addressbook ' + ${addressbook.id}" />
+            <table th:id="'addressbook-' + ${addressbook.id}">
+                <thead>
+                <tr>
+                    <td>First Name</td>
+                    <td>Last Name</td>
+                    <td>Address</td>
+                    <td>Telephone</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="buddy: ${addressbook.buddies}" th:id="'addressbook-' + ${addressbook.id} + '-buddy-' + ${buddy.id}">
+                    <td th:text="${buddy.firstName}" />
+                    <td th:text="${buddy.lastName}" />
+                    <td th:text="${buddy.address}" />
+                    <td th:text="${buddy.telephoneNum}" />
+                </tr>
+                </tbody>
+            </table>
+            <form action="#" method="post" th:action="@{'/editor/addressbook/' + ${addressbook.id} + '/buddyinfo'}">
+                <label for="firstName">First Name:</label><br>
+                <input type="text" id="firstName" name="firstName"><br>
+
+                <label for="lastName">Last Name:</label><br>
+                <input type="text" id="lastName" name="lastName"><br>
+
+                <label for="address">Address:</label><br>
+                <input type="text" id="address" name="address"><br>
+
+                <label for="telephoneNum">Telephone:</label><br>
+                <input type="text" id="telephoneNum" name="telephoneNum">
+
+                <input type="submit" value="Add Buddy">
+            </form>
+            <hr>
+        </div>
+    </div>
+</body>
+</html>
